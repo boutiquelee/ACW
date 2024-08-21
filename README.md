@@ -1,5 +1,5 @@
 # ACW
-Resilient Watermarking for LLM-Generated Codes
+ACW: Enhancing Traceability of AI-Generated Codes Based on Watermarking
 
 Code and data are being updated.
 
