@@ -5,4 +5,4 @@ Code and data are being updated.
 
 **Appendix: Transformation Rules**
 
-![Alt Text](https://github.com/boutiquelee/ACW/raw/main/TransformationRules.png)
+![Alt Text](https://github.com/boutiquelee/ACW/TransformationRules.PNG)
