@@ -1,1 +1,1 @@
-# Efficient and Universal Watermarking for LLM-Generated Code Detection
+Efficient and Universal Watermarking for LLM-Generated Code Detection
