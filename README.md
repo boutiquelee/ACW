@@ -57,7 +57,7 @@ addressing the limitations of existing approaches.
 
 ## Quick Start
 
-Currently, we will share our code and data after e-mail communications, and will fully open them after the offical publication of this paper.
+We will share our code and data after e-mail us at present stage, and will fully open them after the official publication of this paper.
 
 ## Appendix
 
