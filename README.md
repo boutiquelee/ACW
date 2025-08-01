@@ -57,75 +57,7 @@ addressing the limitations of existing approaches.
 
 ## Quick Start
 
-### Step 1: Install Dependencies
-
-Install the required Python libraries by running:
-
-```bash
-pip install -r requirements.txt
-```
-
-Login Sourcery API by running (please apply for a token on the [official Sourcery website](https://docs.sourcery.ai/Coding-Assistant/Guides/Getting-Started/CI/) if necessary):
-
-```bash
-sourcery login --token $SOURCERY_TOKEN
-```
-
-### Step 2: Prepare the Dataset
-
-We have provided our complete experimental data containing AI-generated and human-written code. 
-If additional data is necessary, please add the dataset path to the **folder_list.py** file, like this:
-
-```python
-folder_paths = ["G/Data"]
-```
-
-### Step 3: Testing the Results
-
-#### **Evaluation on Discriminability**
-
-```bash
-python RQ1-get-results.py
-```
-
-The results will be saved as _output.json_, containing the number of positive and negative examples for computation.
-
-#### **Evaluation on Utility**
-
-##### Pass Rate based on APPS
-
-After setting up and downloading the APPS dataset as instructed on the [APPS project page](https://github.com/hendrycks/apps), 
-testing the pass rate using the command:
-
-```bash
-python test_one_solution.py -r <code_dir> -t <test_dir> --save /path/to/save_dir --print_results
-```
-
-##### Pass Rate based on MBPP and HumanEval
-
-First, please consolidate the code data into a JSONL file:
-
-```bash
-python folder_to_jsonl.py convert_py_folder_to_jsonl --input_folder=<code_dir>
-```
-
-After setting up as instructed on the [mxeval project page](https://github.com/amazon-science/mxeval), 
-testing the pass rate using the command::
-
-```bash
-evaluate_functional_correctness <mbpp_data>.jsonl --problem_file data/mbxp/mbpp_release_v1.jsonl
-evaluate_functional_correctness <humaneval_data>.jsonl --problem_file data/multilingual_humaneval/HumanEval.jsonl
-```
-
-#### **Evaluation on resilience**
-
-Running the following command for testing:
-
-```bash
-python RQ4-get-results.py folder_process --strength= <1 or 2>
-```
-
-Strength 1 and 2 correspond to the Default-level and Maximum-level modifications.
+Currently, we will share our code and data after e-mail communications, and will fully open them after the offical publication of this paper.
 
 ## Appendix
 
