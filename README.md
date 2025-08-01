@@ -24,8 +24,15 @@
       <img src='https://img.shields.io/badge/arXiv-PDF-green?style=flat&logo=arXiv&logoColor=green' alt='arXiv PDF'>
          </a>
   
+## Overview of this repository
+- [Abstract](#abstract)
+- [Quick Start](#quick-start)
+- [Appendix](#appendix)
+    - [A.Transformation Rules](#atransformation-rules)
+    - [B.Multi-bit Watermarking](#bmulti-bit-watermarking)
+- [Contact](#contact)
 
-## Overview  <a id="acw"></a>
+## Abstract
 
 <img src="assets/Overview.png">
 
@@ -73,7 +80,7 @@ If additional data is necessary, please add the dataset path to the **folder_lis
 folder_paths = ["G/Data"]
 ```
 
-### Step 3: Get the Results
+### Step 3: Testing the Results
 
 #### **Evaluation on Discriminability**
 
@@ -85,7 +92,7 @@ The results will be saved as _output.json_, containing the number of positive an
 
 #### **Evaluation on Utility**
 
-##### Pass Rate on APPS
+##### Pass Rate based on APPS
 
 After setting up and downloading the APPS dataset as instructed on the [APPS project page](https://github.com/hendrycks/apps), 
 testing the pass rate using the command:
@@ -110,37 +117,28 @@ evaluate_functional_correctness <mbpp_data>.jsonl --problem_file data/mbxp/mbpp_
 evaluate_functional_correctness <humaneval_data>.jsonl --problem_file data/multilingual_humaneval/HumanEval.jsonl
 ```
 
-#### **Evaluation results on resilience**
+#### **Evaluation on resilience**
 
 Running the following command for testing:
 
 ```bash
-python one-click-get-results_ruff_attack.py folder_process --strength= <1 or 2>
+python RQ4-get-results.py folder_process --strength= <1 or 2>
 ```
 
 Strength 1 and 2 correspond to the Default-level and Maximum-level modifications.
 
-## Overview of this repository
-
-- [Overview](#overview-a-idacwa)
-- [Quick Start](#quick-start)
-- [Appendix](#appendix)
-    - [Transformation Rules](#transformation-rules)
-    - [Multi-bit Watermarking](#multi-bit-watermarking)
-- [Contact](#contact)
-
 ## Appendix
 
-### Transformation Rules
+### A.Transformation Rules
 
 <img src="assets/rules.png">
 
-### Multi-bit Watermarking
+### B.Multi-bit Watermarking
 
 We explore the transferability of **ACW** applied for tracing LLMs, beyond our main task of AI-generated code detection.
 By assigning multi-bit watermarks to encode different LLMs (e.g., ChatGPT-4 may be assigned with encoding $1011$), the authorship of a given code can be traced by identifying the extracted bit sequences.
 Preliminary, we encode multi-bit watermarks based on the Bose-Chaudhuri-Hocquenghem (BCH) code, which is a typical error-correction code in digital communication systems.
-Let $\omega$ be a $k$-bit binary sequence, a BCH code over Galois field $GF(q)$ with parameter $(l, k, e)$ denoted as $BCH(l, k, e)_{q}$, which encodes $\omega$ into an $l$-bit sequence $\omega_{en}$.
+Let $\omega$ be a $k$-bit binary sequence, a BCH code over Galois field $GF(q)$ with parameter $(l, k, e)$ denoted as $BCH(l, k, e)\_{q}$, which encodes $\omega$ into an $l$-bit sequence $\omega_{en}$.
 The encoding is governed by a generator polynomial $g(x)$ which is the minimal polynomial over $GF(q)$, ensuring the original message $\omega$ can be recovered by decoding the encoded message $\omega_{en}$ if up to $e$ bits are corrupted.
 For example, $BCH(7, 4, 1)_2$ uses a generator polynomial as $g(x) = x^3 + x + 1$, corresponding to the binary coefficients $1011$.
 
@@ -157,11 +155,10 @@ Given a set of watermarked codes, BitACC refers to the proportion of the codes w
 In particular, we consider the watermark in a certain code snippet to be correctly extracted, only if the extracted watermark matches the original watermark (in bit) exactly.
 
 <div align="center">
-Multi-bit Watermark Extraction Results
+Multi-bit Watermark Extraction Results.
 </div>
-
 <div align="center">
-<img src="assets/result.png" width=80%>
+<img src="assets/result.png" width="80%">
 </div>
 
 
