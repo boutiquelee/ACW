@@ -86,18 +86,13 @@ We empirically evaluate the correctness of **ACW** in extracting multi-bit water
 Given a set of watermarked codes, BitACC refers to the proportion of the codes whose encoded watermarks are correctly extracted, among the total.
 In particular, we consider the watermark in a certain code snippet to be correctly extracted, only if the extracted watermark matches the original watermark (in bit) exactly.
 
-
+<div align="center">
+Multi-bit Watermark Extraction Results
+</div>
 <img src="assets/result.png">
 
-<div align="center">
-
-Multi-bit Watermark Extraction Results.
-
-</div>
-
 The above table presents our results.
-Following our error-correction strategies, 
-in this experiment, we collect the watermarked codes with four applicable transformations in MBPP-GPT-4 and APPS-GPT-4 datasets, 
+Following our error-correction strategies, in this experiment, we collect the watermarked codes with four applicable transformations in MBPP-GPT-4 and APPS-GPT-4 datasets, 
 i.e., each code snippet is embedded with 4-bit watermarks, 
 where the first two bits are original watermarks and the next two bits are generated based on BCH.
 We present the BitACC results before and after error corrections, 
