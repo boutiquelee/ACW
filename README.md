@@ -24,15 +24,8 @@
       <img src='https://img.shields.io/badge/arXiv-PDF-green?style=flat&logo=arXiv&logoColor=green' alt='arXiv PDF'>
          </a>
   
-## Overview of this repository
-- [Abstract](#abstract)
-- [Quick Start](#quick-start)
-- [Appendix](#appendix)
-    - [A. Transformation Rules](#transformation-rules)
-    - [B. Multi-bit Watermarking](#multi-bit-watermarking)
-- [Contact](#contact)
 
-## Abstract
+## Overview  <a id="acw"></a>
 
 <img src="assets/Overview.png">
 
@@ -57,20 +50,97 @@ addressing the limitations of existing approaches.
 
 ## Quick Start
 
-We will share our code and data based on email communications at present, and will fully open them after the official publication of this paper.
+### Step 1: Install Dependencies
+
+Install the required Python libraries by running:
+
+```bash
+pip install -r requirements.txt
+```
+
+Login Sourcery API by running (please apply for a token on the [official Sourcery website](https://docs.sourcery.ai/Coding-Assistant/Guides/Getting-Started/CI/) if necessary):
+
+```bash
+sourcery login --token $SOURCERY_TOKEN
+```
+
+### Step 2: Prepare the Dataset
+
+We have provided our complete experimental data containing AI-generated and human-written code. 
+If additional data is necessary, please add the dataset path to the **folder_list.py** file, like this:
+
+```python
+folder_paths = ["G/Data"]
+```
+
+### Step 3: Get the Results
+
+#### **Evaluation on Discriminability**
+
+```bash
+python RQ1-get-results.py
+```
+
+The results will be saved as _output.json_, containing the number of positive and negative examples for computation.
+
+#### **Evaluation on Utility**
+
+##### Pass Rate on APPS
+
+After setting up and downloading the APPS dataset as instructed on the [APPS project page](https://github.com/hendrycks/apps), 
+testing the pass rate using the command:
+
+```bash
+python test_one_solution.py -r <code_dir> -t <test_dir> --save /path/to/save_dir --print_results
+```
+
+##### Pass Rate based on MBPP and HumanEval
+
+First, please consolidate the code data into a JSONL file:
+
+```bash
+python folder_to_jsonl.py convert_py_folder_to_jsonl --input_folder=<code_dir>
+```
+
+After setting up as instructed on the [mxeval project page](https://github.com/amazon-science/mxeval), 
+testing the pass rate using the command::
+
+```bash
+evaluate_functional_correctness <mbpp_data>.jsonl --problem_file data/mbxp/mbpp_release_v1.jsonl
+evaluate_functional_correctness <humaneval_data>.jsonl --problem_file data/multilingual_humaneval/HumanEval.jsonl
+```
+
+#### **Evaluation results on resilience**
+
+Running the following command for testing:
+
+```bash
+python one-click-get-results_ruff_attack.py folder_process --strength= <1 or 2>
+```
+
+Strength 1 and 2 correspond to the Default-level and Maximum-level modifications.
+
+## Overview of this repository
+
+- [Overview](#overview-a-idacwa)
+- [Quick Start](#quick-start)
+- [Appendix](#appendix)
+    - [Transformation Rules](#transformation-rules)
+    - [Multi-bit Watermarking](#multi-bit-watermarking)
+- [Contact](#contact)
 
 ## Appendix
 
-### A. Transformation Rules
+### Transformation Rules
 
 <img src="assets/rules.png">
 
-### B. Multi-bit Watermarking
+### Multi-bit Watermarking
 
 We explore the transferability of **ACW** applied for tracing LLMs, beyond our main task of AI-generated code detection.
 By assigning multi-bit watermarks to encode different LLMs (e.g., ChatGPT-4 may be assigned with encoding $1011$), the authorship of a given code can be traced by identifying the extracted bit sequences.
 Preliminary, we encode multi-bit watermarks based on the Bose-Chaudhuri-Hocquenghem (BCH) code, which is a typical error-correction code in digital communication systems.
-Let $\omega$ be a $k$-bit binary sequence, a BCH code over Galois field $GF(q)$ with parameter $(l, k, e)$ denoted as $BCH(l, k, e)\_{q}$, which encodes $\omega$ into an $l$-bit sequence $\omega_{en}$.
+Let $\omega$ be a $k$-bit binary sequence, a BCH code over Galois field $GF(q)$ with parameter $(l, k, e)$ denoted as $BCH(l, k, e)_{q}$, which encodes $\omega$ into an $l$-bit sequence $\omega_{en}$.
 The encoding is governed by a generator polynomial $g(x)$ which is the minimal polynomial over $GF(q)$, ensuring the original message $\omega$ can be recovered by decoding the encoded message $\omega_{en}$ if up to $e$ bits are corrupted.
 For example, $BCH(7, 4, 1)_2$ uses a generator polynomial as $g(x) = x^3 + x + 1$, corresponding to the binary coefficients $1011$.
 
@@ -89,10 +159,15 @@ In particular, we consider the watermark in a certain code snippet to be correct
 <div align="center">
 Multi-bit Watermark Extraction Results
 </div>
-<img src="assets/result.png">
+
+<div align="center">
+<img src="assets/result.png" width=80%>
+</div>
+
 
 The above table presents our results.
-Following our error-correction strategies, in this experiment, we collect the watermarked codes with four applicable transformations in MBPP-GPT-4 and APPS-GPT-4 datasets, 
+Following our error-correction strategies, 
+in this experiment, we collect the watermarked codes with four applicable transformations in MBPP-GPT-4 and APPS-GPT-4 datasets, 
 i.e., each code snippet is embedded with 4-bit watermarks, 
 where the first two bits are original watermarks and the next two bits are generated based on BCH.
 We present the BitACC results before and after error corrections, 
